@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Dtos.characters;
 using WebApi.models;
 using WebApi.Services;
 
@@ -19,21 +20,28 @@ public CharacterController(ICharacter CharacterService)
     _characterService=CharacterService;
 }
         [HttpGet("GetAll")]
-        public async Task< ActionResult<Character>> Get()
+        public async Task<ActionResult<ServiceResponse<GetCharacterDto>>> Get()
         {
             return Ok(await _characterService.getAllCharacter());
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Character>> GetSingle(int id)
+        public async Task<ActionResult<ServiceResponse<GetCharacterDto>>> GetSingle(int id)
         {    
             return Ok(await _characterService.GetCharacter(id));
         }
         [HttpPost("addCharacter")]
-        public async Task<ActionResult<List<Character>>> addCharacter(Character character)
+        public async Task<ActionResult<ServiceResponse<List<GetCharacterDto>>>> addCharacter(AddCharacterDto character)
         {   
             
              return Ok(await _characterService.addCharacter(character));
+        }
+
+        [HttpPut("updateCharacter")]
+        public async Task<ActionResult<ServiceResponse<GetCharacterDto>>> updateCharacter(UpdateCharacterDto updatedcharacter)
+        {   
+            
+             return Ok(await _characterService.updateCharacter(updatedcharacter));
         }
     }
 }
