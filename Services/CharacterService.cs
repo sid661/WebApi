@@ -30,6 +30,28 @@ namespace WebApi.Services
             return ServiceResponse;
         }
 
+        public async Task<ServiceResponse<List<GetCharacterDto>>> deleteCharacter(int id)
+        {
+            var serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
+            try
+            {
+                var character = characters.First(c => c.id == id);
+                if(character is null){
+                    throw new Exception($"Character with id '{id}' is not found");
+                }
+                 characters.Remove(character);
+
+                serviceResponse.Data = characters.Select(c=> _mapper.Map<GetCharacterDto>(c)).ToList();  
+            }
+            catch (Exception ex)
+            {
+               serviceResponse.sucess=false;
+               serviceResponse.message=ex.Message;
+            }
+
+            return serviceResponse;
+        }
+
         public async Task<ServiceResponse<List<GetCharacterDto>>> getAllCharacter()
         {
             var ServiceResponse = new ServiceResponse<List<GetCharacterDto>>();

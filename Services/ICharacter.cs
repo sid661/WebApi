@@ -13,6 +13,6 @@ namespace WebApi.Services
         Task<ServiceResponse<GetCharacterDto>> GetCharacter(int id);
         Task<ServiceResponse<List<GetCharacterDto>>> addCharacter(AddCharacterDto characterDto);
         Task<ServiceResponse<GetCharacterDto>> updateCharacter(UpdateCharacterDto characterDto);
-
+        Task<ServiceResponse<List<GetCharacterDto>>> deleteCharacter(int id);
     }
 }

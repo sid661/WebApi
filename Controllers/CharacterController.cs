@@ -40,8 +40,23 @@ public CharacterController(ICharacter CharacterService)
         [HttpPut("updateCharacter")]
         public async Task<ActionResult<ServiceResponse<GetCharacterDto>>> updateCharacter(UpdateCharacterDto updatedcharacter)
         {   
-            
-             return Ok(await _characterService.updateCharacter(updatedcharacter));
+            var ServiceResponse =await _characterService.updateCharacter(updatedcharacter);
+            if(ServiceResponse.Data is null){
+                return NotFound(ServiceResponse);
+            }
+
+             return Ok(ServiceResponse);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<ServiceResponse<GetCharacterDto>>> deleteCharacter(int id)
+        {    
+             var ServiceResponse =await _characterService.deleteCharacter(id);
+            if(ServiceResponse.Data is null){
+                return NotFound(ServiceResponse);
+            }
+
+             return Ok(ServiceResponse);
         }
     }
 }
